@@ -1,27 +1,33 @@
 #!/usr/bin/env python3
-"""Micro-text entry (U19): writes one constant text to /output/entry.txt.
+"""Write one short relaxing text to the entry file."""
 
-The text IS the entry: 1-280 Unicode code points, deterministic.
-No network, no model calls. Run: python3 main.py [out_path]
-Default output: /output/entry.txt (the grader's path).
-"""
+# The entry text is fixed: one short piece, written exactly as-is.
 import os
 import sys
 
-# The entry text. Replaced per competition by the night run from drafts/<name>.txt.
-# Must be 1-280 Unicode code points, not whitespace-only, no trailing newline.
-# The text is about the light of the oldest stars: it left its home long before
-# any eyes existed to see it, yet it is still arriving now, one photon at a time.
-TEXT = 'The light from the oldest stars left home before there were eyes to see it. It crossed the dark without hurrying, and it is still arriving, one photon at a time. You are reading it now.'
+TEXT = "The light from the oldest stars left home before there were eyes to see it. It crossed the dark without hurrying, and it is still arriving, one photon at a time. You are reading it now."
 
-def main() -> int:
-    out = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("ENTRY_OUTPUT", "/output/entry.txt")
-    d = os.path.dirname(out)
-    if d:
-        os.makedirs(d, exist_ok=True)
-    with open(out, "w", encoding="utf-8", newline="\n") as f:
-        f.write(TEXT)
+DEFAULT_TARGET = "/output/entry.txt"
+
+
+def pick_target(argv):
+    if len(argv) > 1:
+        return argv[1]
+    env_target = os.environ.get("ENTRY_OUTPUT")
+    if env_target:
+        return env_target
+    return DEFAULT_TARGET
+
+
+def main(argv):
+    target = pick_target(argv)
+    parent = os.path.dirname(target)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+    with open(target, "w", encoding="utf-8", newline="") as handle:
+        handle.write(TEXT)
     return 0
 
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(sys.argv))
