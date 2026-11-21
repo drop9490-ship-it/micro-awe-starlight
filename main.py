@@ -10,6 +10,8 @@ import sys
 
 # The entry text. Replaced per competition by the night run from drafts/<name>.txt.
 # Must be 1-280 Unicode code points, not whitespace-only, no trailing newline.
+# The text is about the light of the oldest stars: it left its home long before
+# any eyes existed to see it, yet it is still arriving now, one photon at a time.
 TEXT = 'The light from the oldest stars left home before there were eyes to see it. It crossed the dark without hurrying, and it is still arriving, one photon at a time. You are reading it now.'
 
 def main() -> int:
